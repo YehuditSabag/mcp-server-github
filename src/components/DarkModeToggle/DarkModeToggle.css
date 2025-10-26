@@ -1,0 +1,50 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --transition-duration: 0.3s;
+}
+
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-duration) ease-in-out,
+              color var(--transition-duration) ease-in-out;
+}
+
+.theme-toggle {
+  position: relative;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-duration) ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+.theme-toggle .icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
