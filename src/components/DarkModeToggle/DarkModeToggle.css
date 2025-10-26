@@ -1,0 +1,87 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --toggle-bg: #f4f4f4;
+  --toggle-hover: #e0e0e0;
+  --toggle-focus: #007fd4;
+  --transition-duration: 0.3s;
+}
+
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --toggle-bg: #333333;
+  --toggle-hover: #444444;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-duration) ease-in-out,
+              color var(--transition-duration) ease-in-out;
+}
+
+.theme-toggle {
+  position: relative;
+  padding: 8px;
+  border: 2px solid transparent;
+  background: var(--toggle-bg);
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-duration) ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--toggle-hover);
+}
+
+.theme-toggle:focus {
+  outline: none;
+  border-color: var(--toggle-focus);
+  box-shadow: 0 0 0 2px var(--toggle-focus);
+}
+
+.theme-toggle:focus:not(:focus-visible) {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.theme-toggle .icon {
+  font-size: 1.2rem;
+  line-height: 1;
+  transform-origin: center;
+  transition: transform var(--transition-duration) ease;
+}
+
+.theme-toggle:active .icon {
+  transform: scale(0.9);
+}
+
+/* Accessibility: Hide visual elements from screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .theme-toggle {
+    border: 2px solid currentColor;
+  }
+  
+  .theme-toggle:focus {
+    outline: 2px solid currentColor;
+  }
+}
