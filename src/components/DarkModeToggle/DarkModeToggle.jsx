@@ -1,38 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useTheme from '../../hooks/useTheme';
 import './DarkModeToggle.css';
 
+// Analytics tracking function (replace with your analytics implementation)
+const trackThemeToggle = (theme) => {
+  if (window.analytics) {
+    window.analytics.track('Theme Toggle', {
+      theme,
+      timestamp: new Date().toISOString(),
+    });
+  }
+};
+
 const DarkModeToggle = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, toggleTheme } = useTheme();
 
-  useEffect(() => {
-    // Get initial theme from localStorage
-    const savedTheme = localStorage.getItem('theme');
-    setDarkMode(savedTheme === 'dark');
-    
-    // Apply theme to document
-    document.documentElement.classList.toggle('dark-mode', savedTheme === 'dark');
-  }, []);
+  const handleToggle = () => {
+    toggleTheme();
+    trackThemeToggle(darkMode ? 'light' : 'dark');
+  };
 
-  const toggleTheme = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    
-    // Save preference
-    localStorage.setItem('theme', newMode ? 'dark' : 'light');
-    
-    // Apply theme
-    document.documentElement.classList.toggle('dark-mode', newMode);
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleToggle();
+    }
   };
 
   return (
     <button
       className="theme-toggle"
-      onClick={toggleTheme}
-      aria-label="Toggle dark mode"
-      title="Toggle dark mode"
+      onClick={handleToggle}
+      onKeyPress={handleKeyPress}
+      aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
+      aria-pressed={darkMode}
+      title={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
+      type="button"
+      data-testid="theme-toggle"
     >
-      <span className="icon">
+      <span className="icon" aria-hidden="true">
         {darkMode ? '🌙' : '☀️'}
+      </span>
+      <span className="visually-hidden">
+        {darkMode ? 'Dark mode enabled' : 'Light mode enabled'}
       </span>
     </button>
   );
